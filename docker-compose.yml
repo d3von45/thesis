@@ -1,0 +1,11 @@
+version: '3'
+
+services:
+  mysql:
+    image: bitnami/mysql
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+    ports:
+      - 3306:3306
+    volumes:
+      - ./data/mysql:/bitnami/mysql/data

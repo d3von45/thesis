@@ -1,0 +1,55 @@
+san pham:
+	price
+	name
+	category
+	view
+	status
+	description
+	id of owner
+
+image of product:
+	id of product
+	thumb
+	img_data
+
+danh gia
+	description
+	id of owner create
+	id of product
+
+ho so gian hang
+	name
+	email
+	phone
+	website
+	fb
+	description
+	address
+	ghtk
+	viettelpost
+city
+	id
+	name
+
+district
+	id
+	name
+	id_city
+
+order
+	id
+	totalPrice
+	status # -1 0 1 2 3
+	addresstodelivery
+	payment
+	paymentmethod
+	order_day
+	takeproductday
+	recieveday
+	cacelday
+
+order_details
+	id of order
+	id of product
+	quantity
+	
