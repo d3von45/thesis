@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import axios from 'axios';
+import { GoogleLogin } from 'react-google-login';
 
 export default function Login() {
     const [data, setData] = useState({
         email: '',
         password: ''
     });
-
+    console.log(process.env.REACT_G_CLIENT_ID);
     const onChange = (e) => {
         setData({ ...data, [e.target.name]: e.target.value });
     }
@@ -28,6 +29,19 @@ export default function Login() {
         } catch (err) {
             console.log(err.message);
         }
+    }
+
+    const googleFailure = async (res) => {
+        console.log(res);
+    }
+    const googleSuccess = async (res) => {
+        try {
+            const token = res?.tokenId;
+            await axios.post('/api/auth/test', { token: token, abc: "ada", res: res });
+        } catch (error) {
+            alert("error success");
+        }
+
     }
 
     return (
@@ -85,14 +99,23 @@ export default function Login() {
                             type="button"
                             className="flex bg-red-500 text-white items-center justify-center w-full  p-2 border border-gray-600 rounded-md focus:ring-2 focus:ring-offset-1 focus:ring-violet-600"
                         >
-                            <svg
+                            <GoogleLogin
+                                clientId="556026924314-2s78fv3ku34rgoec9123lhm3mh3bt1kr.apps.googleusercontent.com"
+                                render={(renderProps) => (
+                                    <button onClick={renderProps.onClick}>Sign with Google</button>
+                                )}
+                                cookiePolicy={"single_host_origin"}
+                                onSuccess={googleSuccess}
+                                onFailure={googleFailure}
+                            />
+                            {/* <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 viewBox="0 0 32 32"
                                 className="w-5 h-5 fill-current"
                             >
                                 <path d="M16.318 13.714v5.484h9.078c-0.37 2.354-2.745 6.901-9.078 6.901-5.458 0-9.917-4.521-9.917-10.099s4.458-10.099 9.917-10.099c3.109 0 5.193 1.318 6.38 2.464l4.339-4.182c-2.786-2.599-6.396-4.182-10.719-4.182-8.844 0-16 7.151-16 16s7.156 16 16 16c9.234 0 15.365-6.49 15.365-15.635 0-1.052-0.115-1.854-0.255-2.651z"></path>
                             </svg>
-                            <p className="ml-2 font-medium">Login with Google</p>
+                            <p className="ml-2 font-medium">Login with Google</p> */}
                         </button>
                     </div>
 

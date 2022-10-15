@@ -33,7 +33,7 @@ const userController = {
             const newUser = { fullname, email, password: hashPassword };
             const activation_token = createToken.activation(newUser);
 
-            const url = `http://localhost:3000/api/auth/activate/${activation_token}`;
+            const url = `http://localhost:3000/auth/activate/${activation_token}`;
 
             await sendMail.sendEmailRegister(email, url, "Verify your email");
             res.status(200).json({ msg: "welcom!, Please check your email." })
@@ -48,6 +48,16 @@ const userController = {
             const { activation_token } = req.body;
             const user = jwt.verify(activation_token, process.env.ACTIVATION_TOKEN);
             const { fullname, email, password, phone } = user;
+
+            const exist_user = await User.findOne({
+                where: {
+                    email: email
+                }
+            });
+            console.log(exist_user.email);
+
+            if (exist_user) return res.status(200).json("activated");
+
             const newUser = await User.create({
                 fullname: fullname,
                 email: email,
@@ -246,6 +256,11 @@ const userController = {
         } catch (err) {
             res.status(500).json({ msg: err.message });
         }
+    },
+
+    test: async (req, res) => {
+        console.log(req.body);
+        res.send('ok')
     }
 
 }

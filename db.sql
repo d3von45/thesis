@@ -18,7 +18,7 @@ create table users  (
 insert into users(fullname, password, email, createdAt, updatedAt) values(N'Nguyễn Khánh Duy', 'asd12was', 'adasd@gasd.com', now(), now());
 
 select * from users;
-delete from users where id=2;
+delete from users where id=1;
 
 -- drop table users;
 
